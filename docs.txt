@@ -1,0 +1,66 @@
+how our data looks like:
+
+data = {
+  threads: {
+    t1: {
+      '.key': 't1'
+      title: 'Hello',
+      publishedAt : '',
+      posts: {
+        p1: 'p1'
+      },
+      userId: 'u1'
+    }
+  },
+
+  posts: {
+    p1: {
+      '.key': 'p1',
+      text: 'Hello'
+      publishedAt : '',
+      userId: 'u1',
+      threadId: 't1'
+    }
+  },
+
+  users: {
+    u1: {
+      name: 'Alex',
+      '.key': 'u1',
+      threads: {
+        't1'
+      },
+      posts: {
+        'p1'
+      }
+    }
+  },
+
+  forums: {
+    f1: {
+      '.key': 'f1',
+      name: 'fishing',
+      description: '',
+      categoryId: 'c1',
+      threads: {
+        t1: 't1'
+      }
+    }
+  },
+
+  categories: {
+    c1: {
+      '.key': 'c1',
+      name: 'Discussions',
+      forums: {
+        f1: 'f1'
+      }
+    }
+  }
+}
+
+we use '.key' as firebase doen't understand such kind of syntax
+but in js we can access like posts['.key']
+
+
+let's use some data.json file to store our data in src
