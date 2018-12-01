@@ -1,28 +1,22 @@
 <template lang="pug">
-  div
-    div(v-for="thread in threads" :key="thread['.key']" class="col-large push-top")
-      h1 {{thread.title}}
-      div(class="post-list")
-        div(v-for="postId in thread.posts" :key="postId['.key']" class="post")
-          div(class="user-info")
-            a(href="#" class="user-name") {{users[posts[postId].userId].name}}
-            a(href="#")
-              img(class="avatar-large" :src="users[posts[postId].userId].avatar" alt="")
-            p(class="desktop-only text-small") 107 posts
-          div(class="post-content")
-            div {{posts[postId].text}}
-          div(class="post-date text-faded") {{posts[postId].publishedAt}}
+  div(class="col-full")
+    h1 Welcome to the forum
+    ThreadList(:threads="threads")
   </template>
 
 <script>
 import sourceData from '@/data.json'
+import ThreadList from './ThreadList'
 export default {
   data () {
     return {
-      threads: sourceData.threads,
+      threads: Object.values(sourceData.threads),
       posts: sourceData.posts,
       users: sourceData.users
     }
+  },
+  components: {
+    ThreadList
   }
 }
 </script>
