@@ -64,3 +64,32 @@ but in js we can access like posts['.key']
 
 
 let's use some data.json file to store our data in src
+
+in order to use @ as src path we must configure webpack and alias especially
+it is called absolute path
+
+in order to use better css styles we can do several things
+- style module: we create styles in vue file with prefix module and then bind class to element in template:
+  <template lang="pug">
+    div(class="col-full" :class="$style.centered")
+      h1(:class="$style.headingLarge") Not Found
+      p(:class="$style.textLarge") Ooops, we couldn't find what you are looking for. Why don't you
+        router-link(:to="{name: 'pagehome'}")  go home instead?
+  </template>
+  
+  
+  <style module>
+    .headingLarge {
+      font-size: 100px
+    }
+    .textLarge {
+      font-size: 50px;
+      font-weight: 100;
+    }
+    .centered {
+      text-align: center;
+    }
+  </style>
+
+
+  Math.floor(new Date.now() / 1000) // convert date to seconds

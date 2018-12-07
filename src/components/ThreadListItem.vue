@@ -2,10 +2,10 @@
   div(class="thread")
     div
       p
-        a(href="#") {{thread.title}}
+        router-link(:to="{name: 'pagethreadshow', params: {id: thread['.key']}}") {{thread.title}}
       p(class="text-faded text-xsmall")
         |By
-        a(href="#")  {{user.name}}
+        a(href="")  {{user.name}}
         | , {{thread.publishedAt}}.
     div(class="activity")
       p(class="replies-count") {{repliesCount}} replies
