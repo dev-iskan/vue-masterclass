@@ -93,3 +93,32 @@ in order to use better css styles we can do several things
 
 
   Math.floor(new Date.now() / 1000) // convert date to seconds
+
+
+Desctructuring: 
+
+const person = {
+  firstName: 'test',
+  lastName: 'test2',
+  age: 15
+}
+
+let {firstName, lastName, age} = person
+
+But we can also select in different orders and we must enclose it into brackets:
+({firstName, lastName, age} = person)
+
+If we want to assign with different variable name we should do like this:
+let {firstName: fn} = person
+console.log(fn) // test
+
+Default value
+let {firstName = 'Iska'} = person
+
+Default with given name:
+let {firstName: fn = 'Iska'} = person
+
+
+Human friendly dates
+we install moment
+use filters to show date in human friendly format
