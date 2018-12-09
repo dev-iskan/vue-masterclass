@@ -17,6 +17,18 @@ export default new Router({
       name: 'pagethreadshow',
       component: () => import('./views/PageThreadShow.vue')
     },
+    {
+      path: '/forum/:id',
+      props: true,
+      name: 'forum',
+      component: () => import('./views/PageForum.vue')
+    },
+    {
+      path: '/category/:id',
+      props: true,
+      name: 'category',
+      component: () => import('./views/PageCategory.vue')
+    },
     // Handling not found pages
     {
       path: '*',

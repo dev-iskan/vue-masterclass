@@ -7,7 +7,7 @@
       p(class="desktop-only text-small") {{userPostsCount}} posts
     div(class="post-content")
       div {{post.text}}
-    div(class="post-date text-faded" :title="this.post.publishedAt | humanFriendlyDate")
+    div(class="post-date text-faded")
       AppDate(:timestamp="post.publishedAt")
 </template>
 
