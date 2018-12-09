@@ -2,6 +2,9 @@
   div
     div(class="col-large push-top")
       h1 {{thread.title}}
+      p By
+        a(href="#" class="link-unstyled") Robin,
+        AppDate(:timestamp="thread.publishedAt")
       post-list(:posts="posts")
       post-editor(@save="addPost" :threadId="id")
 </template>
