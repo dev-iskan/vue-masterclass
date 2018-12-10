@@ -20,17 +20,15 @@ export default {
   },
   methods: {
     save () {
-      const postId = 'greatPost' + Math.random()
       const post = {
         text: this.newPostText,
         publishedAt: Math.floor(new Date() / 1000),
-        threadId: this.id,
-        userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2',
-        '.key': postId
+        threadId: this.threadId,
+        userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
       }
       this.newPostText = ''
-
       this.$emit('save', { post })
+      this.$store.dispatch('createPost', post)
     }
   }
 }
