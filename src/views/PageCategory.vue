@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(class="col-full")
+  .col-full
     h1 {{ category.name }}
     CategoryListItem(:category="category")
 </template>

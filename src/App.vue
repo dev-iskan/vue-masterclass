@@ -1,18 +1,16 @@
-<template>
-  <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <div class="container">
-      <router-view/>
-    </div>
-  </div>
+<template lang="pug">
+  div#app
+    TheNavbar
+    div.container
+      router-view
 </template>
 
 <script>
+import TheNavbar from '@/components/TheNavbar'
 export default {
-  name: 'app'
+  components: {
+    TheNavbar
+  }
 }
 </script>
 

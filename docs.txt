@@ -122,3 +122,12 @@ let {firstName: fn = 'Iska'} = person
 Human friendly dates
 we install moment
 use filters to show date in human friendly format
+
+
+Naming for components that we use through all aplication and accepting props we name it:
+App.. or Base..
+ - AppDate, BaseEditor and etc
+
+For single component which can be used once on page or doesn't accept any props we name it:
+The...
+ - TheNavbar

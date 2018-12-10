@@ -1,6 +1,6 @@
 <template lang="pug">
-  div(class="thread-list")
-    h2(class="list-title") Threads
+  .thread-list
+    h2.list-title Threads
     ThreadListItem(
       v-for="thread in threads"
       :thread="thread"

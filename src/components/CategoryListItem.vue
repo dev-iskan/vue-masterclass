@@ -1,6 +1,6 @@
 <template lang="pug">
-  div(class="forum-list")
-    h2(class="list-title")
+  .forum-list
+    h2.list-title
       router-link(:to="{name: 'category', params: {id: category['.key']}}") {{ category.name }}
     ForumList(:forums="categoryForums")
 </template>

@@ -1,12 +1,12 @@
 <template lang="pug">
-  div(class="forum-listing")
-    div(class="forum-details")
-      router-link(class="text-xlarge" :to="{name: 'forum', params: {id: forum['.key']}}") {{forum.name}}
+  .forum-listing
+    .forum-details
+      router-link.text-xlarge(:to="{name: 'forum', params: {id: forum['.key']}}") {{forum.name}}
       p {{forum.description}}
-    div(class="threads-count")
-      p(class="count") {{threadsCount}}
+    .threads-count
+      p.count {{threadsCount}}
       | {{threadsCount === 1 ? 'thread' : 'threads'}}
-    div(class="last-thread")
+    .last-thread
       <!-- TODO: implement later -->
 </template>
 <script>

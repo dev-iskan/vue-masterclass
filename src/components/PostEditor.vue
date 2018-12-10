@@ -1,8 +1,8 @@
 <template lang="pug">
   form(@submit.prevent="save")
-        div.form-group
+        .form-group
           textarea.form-input(v-model="newPostText")
-        div.form-actions
+        .form-actions
           button.btn-blue Submit post
 </template>
 

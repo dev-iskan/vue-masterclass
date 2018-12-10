@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(class="post-list")
+  .post-list
     post-list-item(v-for="post in posts" :post="post" :key="post['.key']")
 </template>
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(class="col-full")
+  div(class="col-full push-top")
     h1 Welcome to the forum
     CategoryList(:categories="categories")
   </template>

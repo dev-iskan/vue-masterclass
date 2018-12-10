@@ -1,9 +1,9 @@
 <template lang="pug">
   div
-    div(class="col-large push-top")
+    .col-large.push-top
       h1 {{thread.title}}
       p By
-        a(href="#" class="link-unstyled") Robin,
+        a.link-unstyled(href="#") Robin,
         AppDate(:timestamp="thread.publishedAt")
       post-list(:posts="posts")
       post-editor(:threadId="id")

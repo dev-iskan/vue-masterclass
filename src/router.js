@@ -18,6 +18,12 @@ export default new Router({
       component: () => import('./views/PageThreadShow.vue')
     },
     {
+      path: '/me',
+      name: 'profile',
+      component: () => import('./views/PageProfile.vue'),
+      props: true
+    },
+    {
       path: '/forum/:id',
       props: true,
       name: 'forum',
