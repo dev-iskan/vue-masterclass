@@ -24,6 +24,12 @@ export default new Router({
       props: true
     },
     {
+      path: '/me/edit',
+      name: 'profileedit',
+      component: () => import('./views/PageProfile.vue'),
+      props: { edit: true }
+    },
+    {
       path: '/forum/:id',
       props: true,
       name: 'forum',

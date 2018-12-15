@@ -1,26 +1,17 @@
 <template lang="pug">
   .flex-grid
-    .col-3.push-top
-      .profile-card
-        p.text-center
-          img.avatar-xlarge(:src="user.avatar")
-        h1.title {{user.username}}
-        p.text-lead {{user.name}}
-        p.text-justify
-          span(v-if="user.bio") {{user.bio}}
-          span(v-else) No bio specified.
-        span.online {{user.username}} is online
-        .stats
-          span {{userPostsCount}} posts
-          span {{userThreadsCount}} threads
-        hr
-        p.text-large.text-center(v-if="user.website")
-          i.fa.fa-globe
-          a(:href="user.website") {{user.website}}
-      p.text-xsmall.text-faded.text-center Member since june 2003, last visited 4 hours ago
-      div.text-center
-        hr
-        a.btn-green.btn-small(href="edit-profile.html") Edit Profile
+    user-profile-card(
+       v-if="!edit"
+      :user="user"
+      :userPostsCount="userPostsCount"
+      :userThreadsCount="userThreadsCount"
+    )
+    user-profile-card-editor(
+      v-else
+      :user="user"
+      :userPostsCount="userPostsCount"
+      :userThreadsCount="userThreadsCount"
+    )
     .col-7.push-top
       .profile-header
         span.text-lead Joker's recent activity
@@ -31,11 +22,15 @@
 
 <script>
 import PostList from '@/components/PostList'
+import UserProfileCard from '@/components/UserProfileCard'
+import UserProfileCardEditor from '@/components/UserProfileCardEditor'
 import { mapGetters } from 'vuex'
 import { countObjectProperties } from '@/utils'
 export default {
   components: {
-    PostList
+    PostList,
+    UserProfileCard,
+    UserProfileCardEditor
   },
   computed: {
     ...mapGetters({
@@ -53,6 +48,12 @@ export default {
           .filter(post => post.userId === this.user['.key'])
       }
       return []
+    }
+  },
+  props: {
+    edit: {
+      type: Boolean,
+      default: false
     }
   }
 }
