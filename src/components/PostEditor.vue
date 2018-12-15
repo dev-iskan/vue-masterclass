@@ -1,7 +1,7 @@
 <template lang="pug">
   form(@submit.prevent="save")
     .form-group
-      textarea.form-input(v-model="newPostText")
+      textarea.form-input(v-model="text")
     .form-actions
       button.btn-blue Submit post
 </template>
@@ -15,18 +15,16 @@ export default {
   },
   data () {
     return {
-      newPostText: ''
+      text: ''
     }
   },
   methods: {
     save () {
       const post = {
-        text: this.newPostText,
-        publishedAt: Math.floor(new Date() / 1000),
-        threadId: this.threadId,
-        userId: '7uVPJS9GHoftN58Z2MXCYDqmNAh2'
+        text: this.text,
+        threadId: this.threadId
       }
-      this.newPostText = ''
+      this.text = ''
       this.$emit('save', { post })
       this.$store.dispatch('createPost', post)
     }

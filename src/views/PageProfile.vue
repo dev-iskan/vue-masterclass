@@ -14,7 +14,7 @@
     )
     .col-7.push-top
       .profile-header
-        span.text-lead Joker's recent activity
+        span.text-lead {{user.username}}'s recent activity
         a(href="#") See only started threads?
       hr
       PostList(:posts="userPosts")
