@@ -1,9 +1,9 @@
 <template lang="pug">
   form(@submit.prevent="save")
-        .form-group
-          textarea.form-input(v-model="newPostText")
-        .form-actions
-          button.btn-blue Submit post
+    .form-group
+      textarea.form-input(v-model="newPostText")
+    .form-actions
+      button.btn-blue Submit post
 </template>
 
 <script>

@@ -131,3 +131,52 @@ App.. or Base..
 For single component which can be used once on page or doesn't accept any props we name it:
 The...
  - TheNavbar
+
+
+
+ The best practice to save in utils folder functions that can be used through the project
+
+
+
+
+ Primitives: string, number, bool, null, undefined    are copied by value
+ Objects: object, array, function   are copied by reference
+
+ This means that when you simply assign one primitive to another you copy the whole value, but in case of Objects
+ you copy only reference to memory where value is stored:
+
+ let name = 'Iska'
+ let name2 = name
+ 
+ // so when you change name2 to Boho you don't change name
+
+
+ But:
+
+ let person = {
+   name: 'Iska',
+   age: 22
+ }
+
+ let person2 = person
+
+ // so person2 and person stores only reference to <#1234> where data is located, when you change person2.name = 'Boho'
+ // generally person.name is also changed
+
+ So solution is to clone objects:
+ 
+ let person = {
+   name: 'Iska',
+   age: 22
+ }
+
+let person2 = {...person} // spread operator clones object and save new in another place in memory
+
+same with arrays:
+let animal = ['dog', 'cat']
+let animal2 = [...animal]
+
+
+But pitfall is that if object contains nested object above method fails, so it is better to use simple logic:
+
+let animal2 = JSON.parse(JSON.stringify(animal))
