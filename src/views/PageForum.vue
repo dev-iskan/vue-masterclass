@@ -5,7 +5,7 @@
         .forum-details
           h1 {{forum.name}}
           p.text-lead {{forum.description}}
-        a.btn-green.btn-small(href="new-thread.html") Start a thread
+        router-link.btn-green.btn-small(:to="{name: 'threadcreate', params: {forumId: this.forum['.key']}}") Start a thread
     .col-full.push-top
       ThreadList(:threads="threads")
 </template>

@@ -180,3 +180,11 @@ let animal2 = [...animal]
 But pitfall is that if object contains nested object above method fails, so it is better to use simple logic:
 
 let animal2 = JSON.parse(JSON.stringify(animal))
+
+
+Good practice is to receive from back time in unix timestamps
+
+
+It is important to place routes in router/index.js such that at first place routes without dynamic params:
+1. path: '/thread/create'
+2. path: '/thread/:id'

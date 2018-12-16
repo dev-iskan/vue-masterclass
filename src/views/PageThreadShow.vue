@@ -1,12 +1,11 @@
 <template lang="pug">
-  div
-    .col-large.push-top
-      h1 {{thread.title}}
-      p By
-        a.link-unstyled(href="#") Robin,
-        AppDate(:timestamp="thread.publishedAt")
-      post-list(:posts="posts")
-      post-editor(:threadId="id")
+  .col-large.push-top
+    h1 {{thread.title}}
+    p By
+      a.link-unstyled(href="#") Robin,
+      AppDate(:timestamp="thread.publishedAt")
+    post-list(:posts="posts")
+    post-editor(:threadId="id")
 </template>
 
 <script>

@@ -12,6 +12,12 @@ export default new Router({
       component: PageHome
     },
     {
+      path: '/thread/create/:forumId',
+      props: true,
+      name: 'threadcreate',
+      component: () => import('./views/PageThreadCreate.vue')
+    },
+    {
       path: '/thread/:id',
       props: true,
       name: 'pagethreadshow',
