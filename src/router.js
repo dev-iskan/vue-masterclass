@@ -24,6 +24,12 @@ export default new Router({
       component: () => import('./views/PageThreadShow.vue')
     },
     {
+      path: '/thread/:id/edit',
+      props: true,
+      name: 'threadedit',
+      component: () => import('./views/PageThreadEdit.vue')
+    },
+    {
       path: '/me',
       name: 'profile',
       component: () => import('./views/PageProfile.vue'),

@@ -1,6 +1,7 @@
 <template lang="pug">
   .col-large.push-top
     h1 {{thread.title}}
+      router-link.btn-green.btn-small(:to="{name: 'threadedit', id: this.id}" tag="button" style="margin-left: 10px;") Edit Thread
     p By
       a.link-unstyled(href="#") Robin,
       AppDate(:timestamp="thread.publishedAt")

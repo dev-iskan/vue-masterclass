@@ -188,3 +188,18 @@ Good practice is to receive from back time in unix timestamps
 It is important to place routes in router/index.js such that at first place routes without dynamic params:
 1. path: '/thread/create'
 2. path: '/thread/:id'
+
+
+
+If we need to display conditional dom elements we can wrap it into ≤template> tag:
+
+div(v-if="hello") Hello
+div(v-if="hello") world
+
+
+or 
+
+template(v-if="hello")
+  div Hello
+  div world
+  
