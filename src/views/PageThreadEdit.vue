@@ -1,13 +1,13 @@
-<template>
-  <div class="col-full push-top">
-     <h1>Editing <i>{{thread.title}}</i></h1>
-     <ThreadEditor
+<template lang="pug">
+  .col-full.push-top
+    h1 Editing
+      i {{thread.title}}
+    thread-editor(
       :title="thread.title"
       :text="text"
       @save="save"
       @cancel="cancel"
-    />
-  </div>
+    )
 </template>
 <script>
 import ThreadEditor from '@/components/ThreadEditor'

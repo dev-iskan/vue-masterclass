@@ -1,11 +1,11 @@
-<template>
-  <div class="col-full push-top">
-     <h1>Create new thread in <i>{{forum.name}}</i></h1>
-     <ThreadEditor
+<template lang="pug">
+  .col-full.push-top
+    h1 Create new thread in
+      i {{forum.name}}
+    thread-editor(
       @save="save"
       @cancel="cancel"
-    />
-  </div>
+    )
 </template>
 <script>
 import ThreadEditor from '@/components/ThreadEditor'
