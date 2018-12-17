@@ -4,6 +4,7 @@
       a.user-name(href="#") {{user.name}}
       a(href="#")
         img.avatar-large(:src="user.avatar" alt="")
+      p.desktop-only.text-small {{userThreadsCount}} threads
       p.desktop-only.text-small {{userPostsCount}} posts
     .post-content
       template(v-if="!editing")
@@ -18,7 +19,6 @@
 </template>
 
 <script>
-import { countObjectProperties } from '@/utils'
 import PostEditor from './PostEditor'
 export default {
   props: {
@@ -40,7 +40,10 @@ export default {
       return this.$store.state.users[this.post.userId]
     },
     userPostsCount () {
-      return countObjectProperties(this.user.posts)
+      return this.$store.getters.userPostsCount(this.post.userId)
+    },
+    userThreadsCount () {
+      return this.$store.getters.userThreadsCount(this.post.userId)
     }
   }
 }

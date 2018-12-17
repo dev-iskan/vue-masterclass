@@ -55,8 +55,6 @@ export default {
         threadId: this.threadId
       }
       this.text = ''
-      this.$emit('save', { post })
-      this.$store.dispatch('createPost', post)
       return this.$store.dispatch('createPost', post)
     },
     update () {
