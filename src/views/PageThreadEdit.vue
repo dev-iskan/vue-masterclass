@@ -40,11 +40,11 @@ export default {
         title,
         text
       }).then(thread => {
-        this.$router.push({ name: 'ThreadShow', params: { id: this.id } })
+        this.$router.push({ name: 'pagethreadshow', params: { id: this.id } })
       })
     },
     cancel () {
-      this.$router.push({ name: 'ThreadShow', params: { id: this.id } })
+      this.$router.push({ name: 'pagethreadshow', params: { id: this.id } })
     }
   },
   created () {

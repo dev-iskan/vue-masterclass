@@ -34,11 +34,11 @@ export default {
         title,
         text
       }).then(thread => {
-        this.$router.push({ name: 'ThreadShow', params: { id: thread['.key'] } })
+        this.$router.push({ name: 'pagethreadshow', params: { id: thread['.key'] } })
       })
     },
     cancel () {
-      this.$router.push({ name: 'Forum', params: { id: this.forum['.key'] } })
+      this.$router.push({ name: 'forum', params: { id: this.forum['.key'] } })
     }
   },
   created () {
