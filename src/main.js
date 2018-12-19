@@ -22,5 +22,8 @@ firebase.initializeApp(config)
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate () {
+    store.dispatch('fetchUser', { id: store.state.authId })
+  }
 }).$mount('#app')

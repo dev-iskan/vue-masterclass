@@ -29,7 +29,7 @@
         //- <!--<li class="navbar-item mobile-only">-->
         //-   <!--<a href="#">Logout</a>-->
         //- <!--</li>-->
-        li(class="navbar-user")
+        li(class="navbar-user" v-if="user")
           router-link(:to="{name: 'profile'}")
             img(class="avatar-small" :src="user.avatar" alt="")
             span
