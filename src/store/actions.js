@@ -58,12 +58,23 @@ export default {
   updateThread ({ state, commit, dispatch }, { title, text, id }) {
     return new Promise((resolve, reject) => {
       const thread = state.threads[id]
-      const newThread = { ...thread, title }
-      commit('setThread', { thread: newThread, threadId: id })
+      const post = state.posts[thread.firstPostId]
 
-      dispatch('updatePost', { id: thread.firstPostId, text })
+      const edited = {
+        at: Math.floor(Date.now() / 1000),
+        by: state.authId
+      }
+
+      const updates = {}
+      updates[`posts/${thread.firstPostId}/text`] = text
+      updates[`posts/${thread.firstPostId}/edited`] = edited
+      updates[`threads/${id}/title`] = title
+
+      firebase.database().ref().update(updates)
         .then(() => {
-          resolve(newThread)
+          commit('setThread', { thread: { ...thread, title }, threadId: id })
+          commit('setPost', { postId: thread.firstPostId, post: { ...post, text, edited } })
+          resolve(post)
         })
     })
   },
@@ -71,18 +82,17 @@ export default {
   updatePost ({ state, commit }, { id, text }) {
     return new Promise((resolve, reject) => {
       const post = state.posts[id]
-      commit('setPost', {
-        postId: id,
-        post: {
-          ...post,
-          text,
-          edited: {
-            at: Math.floor(Date.now() / 1000),
-            by: state.authId
-          }
-        }
-      })
-      resolve(post)
+      const edited = {
+        at: Math.floor(Date.now() / 1000),
+        by: state.authId
+      }
+
+      const updates = { text, edited }
+      firebase.database().ref('posts').child(id).update(updates)
+        .then(() => {
+          commit('setPost', { postId: id, post: { ...post, text, edited } })
+          resolve(post)
+        })
     })
   },
 
@@ -113,9 +123,6 @@ export default {
         })
         resolve(Object.values(state.categories))
       })
-        .catch(err => {
-          reject(err)
-        })
     })
   },
 
@@ -126,9 +133,6 @@ export default {
         commit('setItem', { resource, id: snapshot.key, item: snapshot.val() })
         resolve(state[resource][id])
       })
-        .catch(err => {
-          reject(err)
-        })
     })
   },
 
