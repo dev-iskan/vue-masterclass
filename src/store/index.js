@@ -114,13 +114,15 @@ export default new Vuex.Store({
     fetchThread ({ dispatch }, { id }) {
       return dispatch('fetchItem', { resource: 'threads', id, emoji: '📄' })
     },
-    fetchUser ({ dispatch }, { id }) {
-      return dispatch('fetchItem', { resource: 'users', id, emoji: '🙋' })
-    },
 
     fetchPost ({ dispatch }, { id }) {
       return dispatch('fetchItem', { resource: 'posts', id, emoji: '💬' })
     },
+
+    fetchUser ({ dispatch }, { id }) {
+      return dispatch('fetchItem', { resource: 'users', id, emoji: '🙋' })
+    },
+
     fetchCategories (context, { ids }) {
       return context.dispatch('fetchItems', { resource: 'categories', ids, emoji: '🏷' })
     },
@@ -132,21 +134,13 @@ export default new Vuex.Store({
     fetchThreads (context, { ids }) {
       return context.dispatch('fetchItems', { resource: 'threads', ids, emoji: '🌧' })
     },
+
     fetchPosts (context, { ids }) {
       return context.dispatch('fetchItems', { resource: 'posts', ids, emoji: '💬' })
     },
+
     fetchUsers (context, { ids }) {
       return context.dispatch('fetchItems', { resource: 'users', ids, emoji: '🙋' })
-    },
-
-    fetchItem ({ state, commit }, { id, emoji, resource }) {
-      console.log('🔥‍', emoji, id)
-      return new Promise((resolve, reject) => {
-        firebase.database().ref(resource).child(id).once('value', snapshot => {
-          commit('setItem', { resource, id: snapshot.key, item: snapshot.val() })
-          resolve(state[resource][id])
-        })
-      })
     },
 
     fetchAllCategories ({ state, commit }) {
@@ -159,6 +153,16 @@ export default new Vuex.Store({
             commit('setItem', { resource: 'categories', id: categoryId, item: category })
           })
           resolve(Object.values(state.categories))
+        })
+      })
+    },
+
+    fetchItem ({ state, commit }, { id, emoji, resource }) {
+      console.log('🔥‍', emoji, id)
+      return new Promise((resolve, reject) => {
+        firebase.database().ref(resource).child(id).once('value', snapshot => {
+          commit('setItem', { resource, id: snapshot.key, item: snapshot.val() })
+          resolve(state[resource][id])
         })
       })
     },
