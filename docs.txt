@@ -202,4 +202,12 @@ or
 template(v-if="hello")
   div Hello
   div world
-  
+
+
+
+In order to connect project with firebase we need:
+1. Create project in firebase
+2. Add firebase package to project
+3. Initialize configs in main.js
+
+Initialize realtime database  and import our data.json, but we should remove .key property as firebase can't read them
