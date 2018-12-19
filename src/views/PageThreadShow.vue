@@ -1,5 +1,5 @@
 <template lang="pug">
-  .col-large.push-top
+  .col-large.push-top(v-if="thread && user")
     h1 {{thread.title}}
       router-link.btn-green.btn-small(:to="{name: 'threadedit', id: this.id}" tag="button" style="margin-left: 10px;") Edit Thread
     p By
@@ -11,9 +11,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import PostList from '@/components/PostList'
 import PostEditor from '@/components/PostEditor'
+import { countObjectProperties } from '@/utils'
 export default {
+  components: {
+    PostList,
+    PostEditor
+  },
   props: {
     id: {
       required: true,
@@ -21,24 +27,17 @@ export default {
     }
   },
   computed: {
-    user () {
-      return this.$store.state.users[this.thread.userId]
-    },
     thread () {
       return this.$store.state.threads[this.id]
     },
     repliesCount () {
       return this.$store.getters.threadRepliesCount(this.thread['.key'])
     },
+    user () {
+      return this.$store.state.users[this.thread.userId]
+    },
     contributorsCount () {
-      // find the replies
-      const replies = Object.keys(this.thread.posts)
-        .filter(postId => postId !== this.thread.firstPostId)
-        .map(postId => this.$store.state.posts[postId])
-        // get the user ids
-      const userIds = replies.map(post => post.userId)
-      // count the unique ids
-      return userIds.filter((item, index) => index === userIds.indexOf(item)).length
+      return countObjectProperties(this.thread.contributors)
     },
     posts () {
       const postIds = Object.values(this.thread.posts)
@@ -46,9 +45,22 @@ export default {
         .filter(post => postIds.includes(post['.key']))
     }
   },
-  components: {
-    PostList,
-    PostEditor
+  methods: {
+    ...mapActions(['fetchThread', 'fetchUser', 'fetchPosts'])
+  },
+  created () {
+    // fetch thread
+    this.fetchThread({ id: this.id })
+      .then(thread => {
+        // fetch user
+        this.fetchUser({ id: thread.userId })
+        this.fetchPosts({ ids: Object.keys(thread.posts) })
+          .then(posts => {
+            posts.forEach(post => {
+              this.fetchUser({ id: post.userId })
+            })
+          })
+      })
   }
 }
 </script>

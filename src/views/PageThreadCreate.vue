@@ -1,5 +1,5 @@
 <template lang="pug">
-  .col-full.push-top
+  .col-full.push-top(v-if="forum")
     h1 Create new thread in
       i {{forum.name}}
     thread-editor(
@@ -7,17 +7,19 @@
       @cancel="cancel"
     )
 </template>
+
 <script>
+import { mapActions } from 'vuex'
 import ThreadEditor from '@/components/ThreadEditor'
 export default {
+  components: {
+    ThreadEditor
+  },
   props: {
     forumId: {
       type: String,
       required: true
     }
-  },
-  components: {
-    ThreadEditor
   },
   computed: {
     forum () {
@@ -25,21 +27,25 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['createThread', 'fetchForum']),
     save ({ title, text }) {
-      this.$store.dispatch('createThread', {
+      this.createThread({
         forumId: this.forum['.key'],
         title,
         text
+      }).then(thread => {
+        this.$router.push({ name: 'ThreadShow', params: { id: thread['.key'] } })
       })
-        .then(thread => {
-          this.$router.push({ name: 'pagethreadshow', params: { id: thread['.key'] } })
-        })
     },
     cancel () {
-      this.$router.push({ name: 'forum', params: { id: this.forum['.key'] } })
+      this.$router.push({ name: 'Forum', params: { id: this.forum['.key'] } })
     }
+  },
+  created () {
+    this.fetchForum({ id: this.forumId })
   }
 }
 </script>
+
  <style scoped>
  </style>

@@ -7,11 +7,6 @@ import store from './store/index'
 import AppDate from './components/AppDate'
 Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
 
 // Initialize Firebase
 const config = {
@@ -23,3 +18,9 @@ const config = {
   messagingSenderId: '1089776601886'
 }
 firebase.initializeApp(config)
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')

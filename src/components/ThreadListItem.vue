@@ -1,5 +1,5 @@
 <template lang="pug">
-  .thread
+  .thread(v-if="thread && user")
     div
       p
         router-link(:to="{name: 'pagethreadshow', params: {id: thread['.key']}}") {{thread.title}}

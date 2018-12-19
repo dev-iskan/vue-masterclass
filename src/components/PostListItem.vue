@@ -1,5 +1,5 @@
 <template lang="pug">
-  .post
+  .post(v-if="post && user")
     .user-info
       a.user-name(href="#") {{user.name}}
       a(href="#")
