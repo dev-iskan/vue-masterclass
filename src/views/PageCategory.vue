@@ -1,5 +1,5 @@
 <template lang="pug">
-  .col-full(v-if="category")
+  .col-full(v-if="asyncDataStatus_ready")
     h1 {{ category.name }}
     CategoryListItem(:category="category")
 </template>
@@ -7,6 +7,7 @@
 <script>
 import { mapActions } from 'vuex'
 import CategoryListItem from '@/components/CategoryListItem'
+import asyncDataStatus from '@/mixins/asyncDataStatus'
 export default {
   components: {
     CategoryListItem
@@ -17,6 +18,7 @@ export default {
       type: String
     }
   },
+  mixins: [asyncDataStatus],
   computed: {
     category () {
       return this.$store.state.categories[this.id]
@@ -27,9 +29,8 @@ export default {
   },
   created () {
     this.fetchCategory({ id: this.id })
-      .then(category => {
-        this.fetchForums({ ids: category.forums })
-      })
+      .then(category => this.fetchForums({ ids: category.forums }))
+      .then(() => { this.asyncDataStatus_fetched() })
   }
 }
 </script>
