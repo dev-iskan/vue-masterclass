@@ -211,3 +211,13 @@ In order to connect project with firebase we need:
 3. Initialize configs in main.js
 
 Initialize realtime database  and import our data.json, but we should remove .key property as firebase can't read them
+
+
+firebase tools installation : yarn global add firebase-tools
+then login to firebase : firebase login
+then initialize firebase in project : firebase init
+
+when we make changes in firebase configs then we have to deploy changes by : firebase deploy
+
+
+firebase database:set / src/data.json      -  to seed database
