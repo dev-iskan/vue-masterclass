@@ -53,6 +53,16 @@ export default new Router({
       name: 'category',
       component: () => import('./views/PageCategory.vue')
     },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('./views/PageRegister.vue')
+    },
+    {
+      path: '/signin',
+      name: 'SignIn',
+      component: () => import('./views/PageSignIn.vue')
+    },
     // Handling not found pages
     {
       path: '*',

@@ -55,6 +55,46 @@ export default {
     })
   },
 
+  createUser ({ state, commit }, { id, email, name, username, avatar = null }) {
+    return new Promise((resolve, reject) => {
+      const registeredAt = Math.floor(Date.now() / 1000)
+      const usernameLower = username.toLowerCase()
+      email = email.toLowerCase()
+      const user = { avatar, email, name, username, usernameLower, registeredAt }
+      firebase.database().ref('users/' + id).set(user)
+        .then(() => {
+          commit('setItem', { resource: 'users', id: id, item: user })
+          resolve(state.users[id])
+        })
+    })
+  },
+
+  registerUserWithEmailAndPassword ({ dispatch }, { email, name, username, password, avatar = null }) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(response => {
+        return dispatch('createUser', { id: response.user.uid, email, name, username, password, avatar })
+      })
+  },
+
+  signInWithEmailAndPassword (context, { email, password }) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  },
+
+  signOut ({ commit }) {
+    return firebase.auth().signOut()
+      .then(() => {
+        commit('setAuthId', null)
+      })
+  },
+
+  fetchAuthUser ({ dispatch, commit }) {
+    const userId = firebase.auth().currentUser.uid
+    return dispatch('fetchUser', { id: userId })
+      .then(() => {
+        commit('setAuthId', userId)
+      })
+  },
+
   updateThread ({ state, commit, dispatch }, { title, text, id }) {
     return new Promise((resolve, reject) => {
       const thread = state.threads[id]

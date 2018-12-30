@@ -9,27 +9,8 @@
       div(class="bottom bar")
     //-  <!-- use .navbar-open to open nav -->
     nav(class="navbar")
-      ul
-        //- <!--<li class="navbar-item">-->
-        //-   <!--<a href="index.html">Home</a>-->
-        //- <!--</li>-->
-        //- <!--<li class="navbar-item">-->
-        //-   <!--<a href="category.html">Category</a>-->
-        //- <!--</li>-->
-        //- <!--<li class="navbar-item">-->
-        //-   <!--<a href="forum.html">Forum</a>-->
-        //- <!--</li>-->
-        //- <!--<li class="navbar-item">-->
-        //-   <!--<a href="thread.html">Thread</a>-->
-        //- <!--</li>-->
-        //- <!--&lt;!&ndash; Show these option only on mobile&ndash;&gt;-->
-        //- <!--<li class="navbar-item mobile-only">-->
-        //-   <!--<a href="profile.html">My Profile</a>-->
-        //- <!--</li>-->
-        //- <!--<li class="navbar-item mobile-only">-->
-        //-   <!--<a href="#">Logout</a>-->
-        //- <!--</li>-->
-        li(class="navbar-user" v-if="user")
+      ul(v-if="user")
+        li(class="navbar-user")
           router-link(:to="{name: 'profile'}")
             img(class="avatar-small" :src="user.avatar" alt="")
             span
@@ -44,6 +25,12 @@
                 a(href="profile.html") View profile
               li(class="dropdown-menu-item")
                 a(href="#") Log out
+        li(class="navbar-item")
+          a(@click.prevent="$store.dispatch('signOut')") Sign Out
+      ul(v-else)
+        li(class="navbar-item")
+          router-link(:to="{name: 'SignIn'}") Sign In
+          router-link(:to="{name: 'Register'}") Register
 </template>
 
 <script>
