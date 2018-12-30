@@ -221,3 +221,10 @@ when we make changes in firebase configs then we have to deploy changes by : fir
 
 
 firebase database:set / src/data.json      -  to seed database
+
+
+
+Environment variables:
+create file .env and transfer configs of firebase to there
+
+all configs should start from VUE_APP_

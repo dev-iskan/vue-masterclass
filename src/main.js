@@ -10,12 +10,12 @@ Vue.component('AppDate', AppDate)
 
 // Initialize Firebase
 const config = {
-  apiKey: 'AIzaSyD-DmGgVqb_luisz-uMsRMhbIpt2aZGWKM',
-  authDomain: 'vue-masterclass.firebaseapp.com',
-  databaseURL: 'https://vue-masterclass.firebaseio.com',
-  projectId: 'vue-masterclass',
-  storageBucket: 'vue-masterclass.appspot.com',
-  messagingSenderId: '1089776601886'
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID
 }
 firebase.initializeApp(config)
 
