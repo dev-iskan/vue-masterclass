@@ -11,22 +11,20 @@
     nav(class="navbar")
       ul(v-if="user")
         li(class="navbar-user")
-          router-link(:to="{name: 'profile'}")
+          a(@click.prevent="userDropdownOpen = !userDropdownOpen")
             img(class="avatar-small" :src="user.avatar" alt="")
             span
               | {{user.name}}
               img(class="icon-profile" src="../assets/img/arrow-profile.svg" alt="")
           //-  <!-- dropdown menu -->
           //- <!-- add class "active-drop" to show the dropdown -->
-          div(id="user-dropdown")
+          div(id="user-dropdown" :class="{'active-drop': userDropdownOpen}")
             div(class="triangle-drop")
             ul(class="dropdown-menu")
               li(class="dropdown-menu-item")
-                a(href="profile.html") View profile
+                router-link(:to="{name: 'profile'}") View profile
               li(class="dropdown-menu-item")
-                a(href="#") Log out
-        li(class="navbar-item")
-          a(@click.prevent="$store.dispatch('signOut')") Sign Out
+                a(@click.prevent="$store.dispatch('signOut')") Sign Out
       ul(v-else)
         li(class="navbar-item")
           router-link(:to="{name: 'SignIn'}") Sign In
@@ -36,6 +34,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  data () {
+    return {
+      userDropdownOpen: false
+    }
+  },
   computed: {
     ...mapGetters({
       'user': 'authUser'
