@@ -7,11 +7,16 @@
       AppDate(:timestamp="thread.publishedAt")
       span.hide-mobile.text-faded.text-small(style="float:right; margin-top: 2px;") {{repliesCount}} replies by {{contributorsCount}} contributors
     post-list(:posts="posts")
-    post-editor(:threadId="id")
+    post-editor(v-if="authUser" :threadId="id")
+    .text-center(v-else style="margin-bottom: 50px;")
+      router-link(:to="{name: 'SignIn', query: {redirectTo: $route.path}}") Sign in
+      | or
+      router-link(:to="{name: 'Register', query: {redirectTo: $route.path}}") Register
+      | to post a reply.
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import PostList from '@/components/PostList'
 import PostEditor from '@/components/PostEditor'
 import { countObjectProperties } from '@/utils'
@@ -30,6 +35,9 @@ export default {
   },
   mixins: [asyncDataStatus],
   computed: {
+    ...mapGetters({
+      authUser: 'authUser'
+    }),
     thread () {
       return this.$store.state.threads[this.id]
     },

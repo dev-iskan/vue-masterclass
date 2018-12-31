@@ -2,7 +2,7 @@
   div#app
     TheNavbar
     div.container
-      router-view(v-show="showPage" @ready="pageReady")
+      router-view(:key="$route.path" v-show="showPage" @ready="pageReady")
       AppSpinner(v-show="!showPage")
 </template>
 

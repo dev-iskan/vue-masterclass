@@ -46,13 +46,11 @@ export default {
     }
   },
   computed: {
-    computed: {
-      userThreadsCount () {
-        return this.$store.getters.userThreadsCount(this.user['.key'])
-      },
-      userPostsCount () {
-        return this.$store.getters.userPostsCount(this.user['.key'])
-      }
+    userThreadsCount () {
+      return this.$store.getters.userThreadsCount(this.user['.key'])
+    },
+    userPostsCount () {
+      return this.$store.getters.userPostsCount(this.user['.key'])
     }
   },
   data () {

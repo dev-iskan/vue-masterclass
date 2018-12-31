@@ -58,11 +58,15 @@ export default {
   methods: {
     register () {
       this.$store.dispatch('registerUserWithEmailAndPassword', this.form)
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.successRedirect())
     },
     registerWithGoogle () {
       this.$store.dispatch('signInWithGoogle')
-        .then(() => this.$router.push('/'))
+        .then(() => this.$router.successRedirect())
+    },
+    successRedirect () {
+      const redirectTo = this.$route.query.redirectTo || { name: 'pagehome' }
+      this.$router.push(redirectTo)
     }
   },
   created () {

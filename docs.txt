@@ -262,3 +262,9 @@ router.beforeEach((to, from, next) => {
 
 so here we test array matched and check each route meta whether it has requiresAuth or not
 
+Integrating firebase auth to route guard:
+we transfer firebase authentication trigger inside actions.js and dispatch action in router.js beforeEach method
+
+
+in order to redirect to the previous page from login it is need to implement:
+we pass to login query with route.path property,  then in login component we get this query and redirect after success

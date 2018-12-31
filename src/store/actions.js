@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { removeEmptyProperties } from '@/utils'
 
 export default {
   createPost ({ commit, state }, post) {
@@ -86,7 +87,7 @@ export default {
     return firebase.auth().signInWithPopup(provider)
       .then(data => {
         const user = data.user
-        firebase.database().ref('users').child(user.uid).once('value', snapshot => {
+        firebase.database().ref('users/' + user.uid).once('value', snapshot => {
           if (!snapshot.exists()) {
             return dispatch('createUser', { id: user.uid, name: user.displayName, email: user.email, username: user.email, avatar: user.photoURL })
               .then(() => dispatch('fetchAuthUser'))
@@ -106,7 +107,7 @@ export default {
     const userId = firebase.auth().currentUser.uid
     return new Promise((resolve, reject) => {
       // check if user exists in the database
-      firebase.database().ref('users').child(userId).once('value', snapshot => {
+      firebase.database().ref('users/' + userId).once('value', snapshot => {
         if (snapshot.exists()) {
           return dispatch('fetchUser', { id: userId })
             .then(user => {
@@ -117,6 +118,26 @@ export default {
           resolve(null)
         }
       })
+    })
+  },
+
+  initAuthentication ({ dispatch, commit, state }) {
+    return new Promise((resolve, reject) => {
+      // unsubscribe observer if already listening
+      if (state.unsubscribeAuthObserver) {
+        state.unsubscribeAuthObserver()
+      }
+
+      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+        console.log('👣 the user has changed')
+        if (user) {
+          dispatch('fetchAuthUser')
+            .then(dbUser => resolve(dbUser))
+        } else {
+          resolve(null)
+        }
+      })
+      commit('setUnsubscribeAuthObserver', unsubscribe)
     })
   },
 
@@ -153,7 +174,7 @@ export default {
       }
 
       const updates = { text, edited }
-      firebase.database().ref('posts').child(id).update(updates)
+      firebase.database().ref('posts/' + id).update(updates)
         .then(() => {
           commit('setPost', { postId: id, post: { ...post, text, edited } })
           resolve(post)
@@ -162,7 +183,22 @@ export default {
   },
 
   updateUser ({ commit }, user) {
-    commit('setUser', { userId: user['.key'], user })
+    const updates = {
+      avatar: user.avatar,
+      username: user.username,
+      name: user.name,
+      bio: user.bio,
+      website: user.website,
+      email: user.email,
+      location: user.location
+    }
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('users/' + user['.key']).update(removeEmptyProperties(updates))
+        .then(() => {
+          commit('setUser', { userId: user['.key'], user })
+          resolve(user)
+        })
+    })
   },
 
   fetchCategory: ({ dispatch }, { id }) => dispatch('fetchItem', { resource: 'categories', id, emoji: '🏷' }),
@@ -194,7 +230,7 @@ export default {
   fetchItem ({ state, commit }, { id, emoji, resource }) {
     console.log('🔥‍', emoji, id)
     return new Promise((resolve, reject) => {
-      firebase.database().ref(resource).child(id).once('value', snapshot => {
+      firebase.database().ref(resource + '/' + id).once('value', snapshot => {
         commit('setItem', { resource, id: snapshot.key, item: snapshot.val() })
         resolve(state[resource][id])
       })
