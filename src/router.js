@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import PageHome from './views/PageHome.vue'
+import store from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -33,7 +34,8 @@ export default new Router({
       path: '/me',
       name: 'profile',
       component: () => import('./views/PageProfile.vue'),
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/me/edit',
@@ -63,6 +65,14 @@ export default new Router({
       name: 'SignIn',
       component: () => import('./views/PageSignIn.vue')
     },
+    {
+      path: '/logout',
+      name: 'SignOut',
+      beforeEnter (to, from, next) {
+        store.dispatch('signOut')
+          .then(() => next({ name: 'pagehome' }))
+      }
+    },
     // Handling not found pages
     {
       path: '*',
@@ -73,3 +83,19 @@ export default new Router({
   ],
   mode: 'history'
 })
+
+router.beforeEach((to, from, next) => {
+  console.log(`🚦 navigating to ${to.name} from ${from.name}`)
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    // protected route
+    if (store.state.authId) {
+      next()
+    } else {
+      next({ name: 'pagehome' })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

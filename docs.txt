@@ -228,3 +228,37 @@ Environment variables:
 create file .env and transfer configs of firebase to there
 
 all configs should start from VUE_APP_
+
+
+
+
+Route Guards:
+
+beforeRouteEnter(to, from, next)
+beforeRouteLeave(to, from, next)
+beforeRouteUpdate(to, from, next) - special as it triggered when same component is updated, for example showing another thread
+
+
+inside  these functions we can't use this of Vue instance as it is not defined yet, instead we should use direct usage,
+for example instead this.$store we  use store which is imported
+
+$route is active route, $router is global router instance
+
+every route has property matched which is array of routes which matches the path example:
+
+router.beforeEach((to, from, next) => {
+  console.log(`🚦 navigating to ${to.name} from ${from.name}`)
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    // protected route
+    if (store.state.authId) {
+      next()
+    } else {
+      next({ name: 'pagehome' })
+    }
+  } else {
+    next()
+  }
+})
+
+so here we test array matched and check each route meta whether it has requiresAuth or not
+
