@@ -1,6 +1,5 @@
 <template lang="pug">
-  .flex-grid
-    h1  Profile Page
+  .flex-grid(v-if="user")
     user-profile-card(
        v-if="!edit"
       :user="user"
@@ -32,10 +31,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'authUser'
+      user: 'auth/authUser'
     }),
     userPosts () {
-      return this.$store.getters.userPosts(this.user['.key'])
+      return this.$store.getters['users/userPosts'](this.user['.key'])
     }
   },
   mixins: [asyncDataStatus],
@@ -47,7 +46,7 @@ export default {
   },
 
   created () {
-    this.$store.dispatch('fetchPosts', { ids: this.user.posts })
+    this.$store.dispatch('posts/fetchPosts', { ids: this.user.posts })
       .then(() => this.asyncDataStatus_fetched())
   }
 }

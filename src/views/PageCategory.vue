@@ -21,11 +21,14 @@ export default {
   mixins: [asyncDataStatus],
   computed: {
     category () {
-      return this.$store.state.categories[this.id]
+      return this.$store.state.categories.items[this.id]
     }
   },
   methods: {
-    ...mapActions(['fetchCategory', 'fetchForums'])
+    ...mapActions({
+      fetchCategory: 'categories/fetchCategory',
+      fetchForums: 'forums/fetchForums'
+    })
   },
   created () {
     this.fetchCategory({ id: this.id })

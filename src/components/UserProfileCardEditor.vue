@@ -47,10 +47,10 @@ export default {
   },
   computed: {
     userThreadsCount () {
-      return this.$store.getters.userThreadsCount(this.user['.key'])
+      return this.$store.getters['users/userThreadsCount'](this.user['.key'])
     },
     userPostsCount () {
-      return this.$store.getters.userPostsCount(this.user['.key'])
+      return this.$store.getters['users/userPostsCount'](this.user['.key'])
     }
   },
   data () {
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     save () {
-      this.$store.dispatch('updateUser', { ...this.activeUser })
+      this.$store.dispatch('users/updateUser', { ...this.activeUser })
       this.$router.push({ name: 'profile' })
     },
     cancel () {

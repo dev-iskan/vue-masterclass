@@ -24,7 +24,7 @@
               li(class="dropdown-menu-item")
                 router-link(:to="{name: 'profile'}") View profile
               li(class="dropdown-menu-item")
-                a(@click.prevent="$store.dispatch('signOut')") Sign Out
+                a(@click.prevent="$store.dispatch('auth/signOut')") Sign Out
       ul(v-else)
         li(class="navbar-item")
           router-link(:to="{name: 'SignIn'}") Sign In
@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      'user': 'authUser'
+      user: 'auth/authUser'
     })
   }
 }
